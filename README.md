@@ -1,8 +1,16 @@
 # Open Sim Hospital
 
-Getting realistic test data in healthcare is hard. Access requests take weeks. Anonymisation pipelines are fragile. Homegrown fake data lacks clinical coherence. Open Sim Hospital gives you two live PostgreSQL databases filled with realistic synthetic patient data — covering NHS and US formats — with no setup, no PHI, and no approval process required.
+Getting realistic test data in healthcare is hard. Access requests take weeks. Anonymisation pipelines are fragile. Homegrown fake data lacks clinical coherence. Open Sim Hospital gives you two live PostgreSQL databases filled with realistic synthetic patient data — covering NHS and US formats, with Canada and Australia coming soon — with no setup, no PHI, and no approval process required.
 
 ## Available Data
+
+### NHS Database — `dr_open_sim_demo_nhs`
+
+| Schema | Table | Description |
+|--------|-------|-------------|
+| `hl7v2` | `messages` | HL7v2 messages — NHS context |
+| `sus` | `submissions` | Secondary Uses Service datasets (APC, OP, AE, ECDS) |
+| `ecds` | `attendances` | Emergency Care Data Set attendances |
 
 ### USA Database — `dr_open_sim_demo_usa`
 
@@ -12,13 +20,7 @@ Getting realistic test data in healthcare is hard. Access requests take weeks. A
 | `fhir_r4` | `resources` | FHIR R4 resources (Patient, Encounter, Condition, Observation, etc.) stored as JSONB |
 | `tuva_core` | *(coming soon)* | [Tuva Health](https://thetuvaproject.com/) core data model — relational analytics tables |
 
-### NHS Database — `dr_open_sim_demo_nhs`
-
-| Schema | Table | Description |
-|--------|-------|-------------|
-| `hl7v2` | `messages` | HL7v2 messages — NHS context |
-| `sus` | `submissions` | Secondary Uses Service datasets (APC, OP, AE, ECDS) |
-| `ecds` | `attendances` | Emergency Care Data Set attendances |
+### Coming Soon — Canada & Australia
 
 ## Connect
 
@@ -32,16 +34,16 @@ Password: AVNS_My2abHLmfZgwNPgHs_a
 SSL:      required
 ```
 
-**USA database:**
-```
-Database: dr_open_sim_demo_usa
-Connection String: postgresql://dr_open_sim_demo:AVNS_My2abHLmfZgwNPgHs_a@db-insightsage-do-user-18824683-0.i.db.ondigitalocean.com:25060/dr_open_sim_demo_usa?sslmode=require
-```
-
 **NHS database:**
 ```
 Database: dr_open_sim_demo_nhs
 Connection String: postgresql://dr_open_sim_demo:AVNS_My2abHLmfZgwNPgHs_a@db-insightsage-do-user-18824683-0.i.db.ondigitalocean.com:25060/dr_open_sim_demo_nhs?sslmode=require
+```
+
+**USA database:**
+```
+Database: dr_open_sim_demo_usa
+Connection String: postgresql://dr_open_sim_demo:AVNS_My2abHLmfZgwNPgHs_a@db-insightsage-do-user-18824683-0.i.db.ondigitalocean.com:25060/dr_open_sim_demo_usa?sslmode=require
 ```
 
 > These are **read-only** connections. All data is synthetic — no real patient information is included.
@@ -54,15 +56,15 @@ Events are generated in clinical order — care pathways first, documentation se
 
 Ready-to-run SQL queries to get started:
 
-### USA
-- [Browse HL7v2 Messages](sample_queries/usa/browse_hl7v2_messages.sql) — Message type counts and sample ADT^A01
-- [Query FHIR Resources](sample_queries/usa/query_fhir_resources.sql) — Resource type counts, Patient queries, Condition code extraction
-- [FHIR Patient Summary](sample_queries/usa/fhir_patient_summary.sql) — Join Patient + Encounter + Condition resources
-
 ### NHS
 - [Browse HL7v2 Messages](sample_queries/nhs/browse_hl7v2_messages.sql) — Message type counts and samples
 - [Browse SUS Submissions](sample_queries/nhs/browse_sus_submissions.sql) — Dataset type counts and sample APC record
 - [SUS Admitted Patient Care](sample_queries/nhs/sus_admitted_patient_care.sql) — Parse APC submissions, count by HRG/diagnosis
+
+### USA
+- [Browse HL7v2 Messages](sample_queries/usa/browse_hl7v2_messages.sql) — Message type counts and sample ADT^A01
+- [Query FHIR Resources](sample_queries/usa/query_fhir_resources.sql) — Resource type counts, Patient queries, Condition code extraction
+- [FHIR Patient Summary](sample_queries/usa/fhir_patient_summary.sql) — Join Patient + Encounter + Condition resources
 
 ### Cross-Country
 - [Compare Patient Volumes](sample_queries/cross_country/compare_patient_volumes.sql) — Patient counts USA vs NHS
