@@ -4,7 +4,7 @@ Column-by-column descriptions of every table in the Open Sim Hospital demo datab
 
 ---
 
-## USA Database — `dr_open_sim_demo_usa`
+## NHS Database — `dr_open_sim_demo_nhs`
 
 ### `hl7v2.messages`
 
@@ -27,18 +27,6 @@ Column-by-column descriptions of every table in the Open Sim Hospital demo datab
 | `content` | JSONB | Full FHIR R4 resource as JSON — query with PostgreSQL JSONB operators |
 | `created_at` | TIMESTAMP | When the resource was generated |
 
-### `tuva_core` *(coming soon)*
-
-Relational tables following the [Tuva Health](https://thetuvaproject.com/) core data model. This schema will contain analytics-ready tables including patient, encounter, condition, procedure, medication, and observation tables in a normalised relational format.
-
----
-
-## NHS Database — `dr_open_sim_demo_nhs`
-
-### `hl7v2.messages`
-
-Same structure as the USA `hl7v2.messages` table (see above). Messages reflect NHS-specific HL7v2 conventions and coding systems.
-
 ### `sus.submissions`
 
 | Column | Type | Description |
@@ -57,6 +45,22 @@ Same structure as the USA `hl7v2.messages` table (see above). Messages reflect N
 | `patient_id` | UUID | Reference to the patient |
 | `content` | TEXT | Full ECDS attendance record |
 | `created_at` | TIMESTAMP | When the attendance was generated |
+
+---
+
+## USA Database — `dr_open_sim_demo_usa`
+
+### `fhir_r4.resources`
+
+Same structure as the NHS `fhir_r4.resources` table (see above). Resources follow US coding conventions (ICD-10-CM, CPT, LOINC).
+
+### `hl7v2.messages`
+
+Same structure as the NHS `hl7v2.messages` table (see above). Messages follow US HL7v2 conventions and coding systems.
+
+### `tuva_core` *(coming soon)*
+
+Relational tables following the [Tuva Health](https://thetuvaproject.com/) core data model. This schema will contain analytics-ready tables including patient, encounter, condition, procedure, medication, and observation tables in a normalised relational format.
 
 ---
 

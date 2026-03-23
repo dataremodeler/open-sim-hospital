@@ -6,19 +6,20 @@ Getting realistic test data in healthcare is hard. Access requests take weeks. A
 
 ### NHS Database — `dr_open_sim_demo_nhs`
 
-| Schema | Table | Description |
-|--------|-------|-------------|
-| `hl7v2` | `messages` | HL7v2 messages — NHS context |
-| `sus` | `submissions` | Secondary Uses Service datasets (APC, OP, AE, ECDS) |
-| `ecds` | `attendances` | Emergency Care Data Set attendances |
+| Schema | Table | Rows | Description |
+|--------|-------|------|-------------|
+| `hl7v2` | `messages` | 277,700 | HL7v2 messages — NHS context |
+| `fhir_r4` | `resources` | 27,471 | FHIR R4 resources stored as JSONB |
+| `sus` | `submissions` | 32,112 | Secondary Uses Service datasets (APC, OP, AE, ECDS) |
+| `ecds` | `attendances` | *(pending)* | Emergency Care Data Set attendances |
 
 ### USA Database — `dr_open_sim_demo_usa`
 
-| Schema | Table | Description |
-|--------|-------|-------------|
-| `hl7v2` | `messages` | HL7v2 messages (ADT^A01, ORU^R01, ORM^O01, etc.) |
-| `fhir_r4` | `resources` | FHIR R4 resources (Patient, Encounter, Condition, Observation, etc.) stored as JSONB |
-| `tuva_core` | *(coming soon)* | [Tuva Health](https://thetuvaproject.com/) core data model — relational analytics tables |
+| Schema | Table | Rows | Description |
+|--------|-------|------|-------------|
+| `fhir_r4` | `resources` | 27,601 | FHIR R4 resources (Patient, Encounter, Condition, Observation, etc.) stored as JSONB |
+| `hl7v2` | `messages` | *(pending)* | HL7v2 messages (ADT^A01, ORU^R01, ORM^O01, etc.) |
+| `tuva_core` | *(coming soon)* | — | [Tuva Health](https://thetuvaproject.com/) core data model — relational analytics tables |
 
 ### Coming Soon — Canada & Australia
 
@@ -27,23 +28,23 @@ Getting realistic test data in healthcare is hard. Access requests take weeks. A
 Use any PostgreSQL client (psql, DBeaver, DataGrip, etc.):
 
 ```
-Host:     db-insightsage-do-user-18824683-0.i.db.ondigitalocean.com
+Host:     db-open-demo-do-user-25666328-0.l.db.ondigitalocean.com
 Port:     25060
 User:     dr_open_sim_demo
-Password: AVNS_My2abHLmfZgwNPgHs_a
+Password: OpenDemoData2026!
 SSL:      required
 ```
 
 **NHS database:**
 ```
 Database: dr_open_sim_demo_nhs
-Connection String: postgresql://dr_open_sim_demo:AVNS_My2abHLmfZgwNPgHs_a@db-insightsage-do-user-18824683-0.i.db.ondigitalocean.com:25060/dr_open_sim_demo_nhs?sslmode=require
+Connection String: postgresql://dr_open_sim_demo:OpenDemoData2026!@db-open-demo-do-user-25666328-0.l.db.ondigitalocean.com:25060/dr_open_sim_demo_nhs?sslmode=require
 ```
 
 **USA database:**
 ```
 Database: dr_open_sim_demo_usa
-Connection String: postgresql://dr_open_sim_demo:AVNS_My2abHLmfZgwNPgHs_a@db-insightsage-do-user-18824683-0.i.db.ondigitalocean.com:25060/dr_open_sim_demo_usa?sslmode=require
+Connection String: postgresql://dr_open_sim_demo:OpenDemoData2026!@db-open-demo-do-user-25666328-0.l.db.ondigitalocean.com:25060/dr_open_sim_demo_usa?sslmode=require
 ```
 
 > These are **read-only** connections. All data is synthetic — no real patient information is included.
