@@ -10,7 +10,7 @@ Pre-built SQL queries for live demonstrations against `dr_open_sim_demo_usa`.
 - [ ] dbt built (for queries 04–06): `dbt build` in the Tuva project
 - [ ] DBeaver/DataGrip open with connection pre-saved (for visual demos)
 
-**dbt schema note:** Queries 04, 05, 06 use Tuva mart output. After `dbt build`, check which schema your mart tables landed in (e.g. `readmissions`, `cms_hcc`, `chronic_conditions`) and update the schema prefix in those files accordingly.
+**dbt schema note:** Queries 04, 05, 06 use Tuva mart output. All Tuva mart schemas are prefixed with `tuva_` (e.g. `tuva_readmissions`, `tuva_cms_hcc`, `tuva_chronic_conditions`).
 
 ## Connection
 

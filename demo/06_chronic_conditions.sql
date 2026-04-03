@@ -11,8 +11,7 @@ SELECT
     COUNT(DISTINCT person_id)           AS patients,
     ROUND(100.0 * COUNT(DISTINCT person_id) / (SELECT COUNT(DISTINCT person_id) FROM tuva_input.eligibility), 1)
                                         AS prevalence_pct
-FROM chronic_conditions.condition_flags  -- adjust schema name if needed
-WHERE condition_flag = true
+FROM tuva_chronic_conditions.tuva_chronic_conditions_long
 GROUP BY condition
 ORDER BY patients DESC;
 
@@ -23,8 +22,7 @@ SELECT
     ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) OVER (), 1) AS pct
 FROM (
     SELECT person_id, COUNT(*) AS condition_count
-    FROM chronic_conditions.condition_flags
-    WHERE condition_flag = true
+    FROM tuva_chronic_conditions.tuva_chronic_conditions_long
     GROUP BY person_id
 ) sub
 GROUP BY condition_count
@@ -35,12 +33,10 @@ SELECT
     a.condition AS condition_a,
     b.condition AS condition_b,
     COUNT(*)    AS patients_with_both
-FROM chronic_conditions.condition_flags a
-JOIN chronic_conditions.condition_flags b
+FROM tuva_chronic_conditions.tuva_chronic_conditions_long a
+JOIN tuva_chronic_conditions.tuva_chronic_conditions_long b
   ON a.person_id = b.person_id
  AND a.condition < b.condition     -- avoid duplicates
-WHERE a.condition_flag = true
-  AND b.condition_flag = true
 GROUP BY a.condition, b.condition
 ORDER BY patients_with_both DESC
 LIMIT 10;

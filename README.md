@@ -6,6 +6,8 @@ Getting realistic test data in healthcare is hard. Access requests take weeks. A
 
 **10,000+ synthetic patients in Tuva Input Layer format** — ready to run [Tuva Health](https://thetuvaproject.com/) dbt models against a production-scale dataset on day one.
 
+**Input Layer**
+
 | Schema | Table | Rows | Description |
 |--------|-------|------|-------------|
 | `tuva_input` | `medical_claim` | ~180,000 | Inpatient, outpatient, and professional claims with ICD-10-CM diagnoses and CPT procedures |
@@ -13,6 +15,27 @@ Getting realistic test data in healthcare is hard. Access requests take weeks. A
 | `tuva_input` | `lab_result` | ~120,000 | LOINC-coded lab results with numeric values and reference ranges |
 | `tuva_input` | `pharmacy_claim` | ~90,000 | NDC-coded prescription fills with days supply and costs |
 | `tuva_input` | `observation` | ~60,000 | Vital signs and clinical observations |
+
+**Tuva Core Model**
+
+| Schema | Tables | Description |
+|--------|--------|-------------|
+| `core` | 8 tables | Tuva Core data model — normalized patient, encounter, condition, procedure, medication, lab, observation, and eligibility |
+
+**Tuva Data Marts**
+
+| Schema | Description |
+|--------|-------------|
+| `readmissions` | 30-day unplanned readmission flags and summary |
+| `cms_hcc` | CMS-HCC risk scores, patient risk factors, and demographic coefficients |
+| `chronic_conditions` | Tuva chronic condition flags (long format) with prevalence tracking |
+| `ccsr` | Clinical Classifications Software Refined — diagnosis and procedure groupings |
+| `financial_pmpm` | Per-member-per-month cost summaries by payer and service category |
+
+**Multi-Format**
+
+| Schema | Table | Rows | Description |
+|--------|-------|------|-------------|
 | `fhir_r4` | `resources` | ~27,601 | FHIR R4 resources (Patient, Encounter, Condition, Observation) as JSONB |
 | `hl7v2` | `messages` | *(coming soon)* | HL7v2 ADT, ORU, ORM messages |
 
@@ -25,6 +48,31 @@ Tuva's open demo (Synthea-based) has ~1,000 patients and claims only. This datas
 - **Pharmacy** — NDC-coded fills that match the diagnoses
 - **Multi-format** — the same patients exist as Tuva inputs, FHIR R4 bundles, and HL7v2 messages
 - **Refreshable** — nightly pipeline can re-run with any date range, patient count, or condition mix
+
+### Quick Start
+
+Connect with any PostgreSQL client and run your first query in under a minute:
+
+```bash
+# Connect using psql
+psql "postgresql://dr_open_sim_demo:OpenDemoData2026!@db-open-demo-do-user-25666328-0.l.db.ondigitalocean.com:25060/dr_open_sim_demo_usa?sslmode=require"
+```
+
+```sql
+-- What's in the database?
+SELECT 'medical_claim' AS table_name, COUNT(*) AS rows FROM tuva_input.medical_claim
+UNION ALL
+SELECT 'eligibility',  COUNT(*) FROM tuva_input.eligibility
+UNION ALL
+SELECT 'lab_result',   COUNT(*) FROM tuva_input.lab_result
+UNION ALL
+SELECT 'pharmacy_claim', COUNT(*) FROM tuva_input.pharmacy_claim
+UNION ALL
+SELECT 'observation',  COUNT(*) FROM tuva_input.observation
+ORDER BY rows DESC;
+```
+
+Or use DBeaver / DataGrip — paste the connection details from the [Connect](#connect) section below. All schemas are visible to the `dr_open_sim_demo` user.
 
 ### Quick Start — Tuva dbt
 
