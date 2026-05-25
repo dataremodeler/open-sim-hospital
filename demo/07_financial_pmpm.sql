@@ -26,8 +26,8 @@ WITH member_months AS (
 claim_costs AS (
     SELECT
         e.payer,
-        SUM(mc.paid_amount)             AS total_paid,
-        SUM(mc.allowed_amount)          AS total_allowed
+        SUM(mc.paid_amount::numeric)             AS total_paid,
+        SUM(mc.allowed_amount::numeric)          AS total_allowed
     FROM tuva_input.medical_claim mc
     JOIN tuva_input.eligibility e ON e.person_id = mc.person_id
     GROUP BY e.payer
@@ -50,8 +50,8 @@ ORDER BY pmpm_allowed DESC;
 SELECT
     claim_type,
     COUNT(DISTINCT person_id)           AS unique_patients,
-    ROUND(SUM(paid_amount), 2)          AS total_paid,
-    ROUND(AVG(paid_amount), 2)          AS avg_claim_amount
+    ROUND(SUM(paid_amount::numeric), 2)          AS total_paid,
+    ROUND(AVG(paid_amount::numeric), 2)          AS avg_claim_amount
 FROM tuva_input.medical_claim
 WHERE claim_type IS NOT NULL
 GROUP BY claim_type
